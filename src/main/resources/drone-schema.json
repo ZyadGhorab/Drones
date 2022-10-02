@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Drone",
+  "description": "A Drone of the drones fleet",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for a drone",
+      "type": "integer"
+    },
+    "serialNumber": {
+      "description": "SerialNumber of the drone",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "model": {
+      "type": "string",
+      "description": "Model of the drone",
+      "enum": [
+        "LightWeight",
+        "MiddleWeight",
+        "CruiserWeight",
+        "HeavyWeight"
+      ]
+    },
+    "weightLimitInGrams": {
+      "description": "Weight limit of the drone in grams",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 500,
+      "exclusiveMinimum": true
+    },
+    "batteryPercentage": {
+      "description": "Battery percentage of the drone",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "multipleOf": 0.01
+    },
+    "state": {
+      "type": "string",
+      "description": "Status of the drone",
+      "enum": [
+        "IDLE",
+        "LOADING",
+        "LOADED",
+        "DELIVERING",
+        "DELIVERED",
+        "RETURNING"
+      ]
+    },
+    "medications": {
+      "description": "Medications of the drone",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for a medication",
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the medication",
+            "type": "string",
+            "pattern": "[a-zA-Z0-9-_]",
+            "minLength": 1
+          },
+          "weightInGrams": {
+            "description": "Weight of the medication in grams",
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true
+          },
+          "code": {
+            "description": "Code of the medication",
+            "type": "string",
+            "pattern": "[A-Z0-9_]",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "weightInGrams",
+          "code"
+        ]
+      }
+    }
+  },
+  "required": [
+    "id",
+    "serialNumber",
+    "model",
+    "weightLimitInGrams",
+    "batteryPercentage",
+    "state"
+  ]
+}

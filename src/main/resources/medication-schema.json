@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Drone",
+  "description": "Medications of the drone",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for a medication",
+      "type": "integer"
+    },
+    "name": {
+      "description": "Name of the medication",
+      "type": "string",
+      "pattern": "[a-zA-Z0-9-_]",
+      "minLength": 1
+    },
+    "weightInGrams": {
+      "description": "Weight of the medication in grams",
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": true
+    },
+    "code": {
+      "description": "Code of the medication",
+      "type": "string",
+      "pattern": "[A-Z0-9_]",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "weightInGrams",
+    "code"
+  ]
+}

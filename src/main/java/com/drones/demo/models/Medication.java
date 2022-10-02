@@ -1,34 +1,42 @@
 package com.drones.demo.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Builder
 @ToString
+@Entity
+@Table(name = "Medication")
 public class Medication {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
-  private Double weight;
+  private Double weightInGrams;
   private String code;
   private Byte[] image;
 
-  public Medication() {}
+  @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "droneId", insertable = false, updatable = false)
+  private Drone drone;
 
-  public Medication(String name, Double weight, String code, Byte[] image) {
+  public Medication(
+      Long id, String name, Double weightInGrams, String code, Byte[] image, Drone drone) {
+    this.id = id;
     this.name = name;
-    this.weight = weight;
+    this.weightInGrams = weightInGrams;
     this.code = code;
     this.image = image;
+    this.drone = drone;
   }
 }
